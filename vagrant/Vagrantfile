@@ -1,0 +1,35 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "puppet" do |puppet|
+    puppet.hostmanager.enabled = true
+    puppet.hostmanager.ignore_private_ip = false
+    puppet.hostmanager.include_offline = true
+    puppet.vm.box = "centos/7"
+    puppet.vm.hostname = "puppet.hq.intel"
+    puppet.vm.network :private_network, ip: "10.0.0.10"
+    puppet.hostmanager.aliases = %w(puppet)
+  end
+
+  config.vm.define "analyst" do |analyst|
+    analyst.hostmanager.enabled = true
+    analyst.hostmanager.ignore_private_ip = false
+    analyst.hostmanager.include_offline = true
+    analyst.vm.box = "centos/7"
+    analyst.vm.hostname = "analyst.hq.intel"
+    analyst.vm.network :private_network, ip: "10.0.0.20"
+    analyst.hostmanager.aliases = %w(analyst)
+  end
+
+  config.vm.define "operations" do |operations|
+    operations.hostmanager.enabled = true
+    operations.hostmanager.ignore_private_ip = false
+    operations.hostmanager.include_offline = true
+    operations.vm.box = "debian/jessie64"
+    operations.vm.hostname = "operations.hq.intel"
+    operations.vm.network :private_network, ip: "10.0.0.30"
+    operations.hostmanager.aliases = %w(operations)
+  end
+end
