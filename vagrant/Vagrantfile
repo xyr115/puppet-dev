@@ -2,15 +2,36 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-
   config.vm.define "puppet" do |puppet|
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 8192
+    end
+
+    puppet.vm.synced_folder ".", "/vagrant"
+    puppet.vm.synced_folder "../code", "/puppet_code"
+    puppet.vm.synced_folder "../puppetserver", "/puppet_server"
+    puppet.vm.box = "boxcutter/centos72"
+
     puppet.hostmanager.enabled = true
     puppet.hostmanager.ignore_private_ip = false
     puppet.hostmanager.include_offline = true
+
     puppet.vm.box = "centos/7"
     puppet.vm.hostname = "puppet.hq.intel"
     puppet.vm.network :private_network, ip: "10.0.0.10"
     puppet.hostmanager.aliases = %w(puppet)
+    puppet.vm.provision "shell", inline: <<-SHELL
+      sudo yum update -y
+      sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
+      sudo yum install puppetserver -y
+      sudo rm -rf /etc/puppetlabs/code
+      sudo ln -s /puppet_code /etc/puppetlabs/code
+      sudo rm -rf /etc/puppetlabs/puppetserver
+      sudo ln -s /puppet_puppetserver /etc/puppetlabs/puppetserver
+      sudo sed -i 's/2g/4g/g' /etc/sysconfig/puppetserver
+      echo "*.hq.intel" | sudo tee /etc/puppetlabs/puppet/autosign.conf
+      sudo service puppetserver start
+    SHELL
   end
 
   config.vm.define "analyst" do |analyst|
@@ -21,6 +42,12 @@ Vagrant.configure("2") do |config|
     analyst.vm.hostname = "analyst.hq.intel"
     analyst.vm.network :private_network, ip: "10.0.0.20"
     analyst.hostmanager.aliases = %w(analyst)
+    analyst.vm.provision "shell", inline: <<-SHELL
+      sudo yum update -y
+      sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
+      sudo yum install -y puppet-agent
+      sudo service puppet start
+    SHELL
   end
 
   config.vm.define "operations" do |operations|
@@ -31,5 +58,13 @@ Vagrant.configure("2") do |config|
     operations.vm.hostname = "operations.hq.intel"
     operations.vm.network :private_network, ip: "10.0.0.30"
     operations.hostmanager.aliases = %w(operations)
+    operations.vm.provision "shell", inline: <<-SHELL
+      wget https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
+      sudo dpkg -i puppetlabs-release-pc1-jessie.deb
+      sudo apt-get update
+      sudo apt-get install puppet-agent -y
+      sudo /opt/puppetlabs/bin/puppet agent --enable
+      sudo service puppet start
+    SHELL
   end
 end
