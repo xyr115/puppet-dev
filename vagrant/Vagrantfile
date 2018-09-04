@@ -22,13 +22,15 @@ Vagrant.configure("2") do |config|
     puppet.hostmanager.aliases = %w(puppet)
     puppet.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
+      sudo yum install vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install puppetserver -y
-      sudo rm -rf /etc/puppetlabs/code
-      sudo ln -s /puppet_code /etc/puppetlabs/code
-      sudo rm -rf /etc/puppetlabs/puppetserver
-      sudo ln -s /puppet_puppetserver /etc/puppetlabs/puppetserver
+      # sudo rm -rf /etc/puppetlabs/code
+      # sudo ln -s /puppet_code /etc/puppetlabs/code
+      # sudo rm -rf /etc/puppetlabs/puppetserver
+      # sudo ln -s /puppet_puppetserver /etc/puppetlabs/puppetserver
       sudo sed -i 's/2g/4g/g' /etc/sysconfig/puppetserver
+      #sudo sed -i 's/-XX:MaxPermSize=256m//g' /etc/sysconfig/puppetserver
       echo "*.hq.intel" | sudo tee /etc/puppetlabs/puppet/autosign.conf
       sudo service puppetserver start
     SHELL
