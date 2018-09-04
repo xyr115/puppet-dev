@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
     puppet.hostmanager.aliases = %w(puppet)
     puppet.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
+      sudo yum install ruby
       sudo yum install vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install puppetserver -y
@@ -54,6 +55,8 @@ Vagrant.configure("2") do |config|
     analyst.hostmanager.aliases = %w(analyst)
     analyst.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
+      sudo yum install ruby
+      sudo yum install vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install -y puppet-agent
       sudo service puppet start
@@ -71,7 +74,9 @@ Vagrant.configure("2") do |config|
     operations.vm.provision "shell", inline: <<-SHELL
       wget https://apt.puppetlabs.com/puppetlabs-release-pc1-jessie.deb
       sudo dpkg -i puppetlabs-release-pc1-jessie.deb
-      sudo apt-get update
+      sudo apt-get update -y
+      sudo apt-get install ruby-full
+      sudo apt install vim -y
       sudo apt-get install puppet-agent -y
       sudo /opt/puppetlabs/bin/puppet agent --enable
       sudo service puppet start
