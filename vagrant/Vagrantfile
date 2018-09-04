@@ -71,4 +71,15 @@ Vagrant.configure("2") do |config|
       sudo service puppet start
     SHELL
   end
+
+  config.vm.define "azul" do |azul|
+    #Puppet Agent for Puppet Server
+    azul.vm.box = "devopsguys/Windows2012Eval"
+    azul.vm.hostname = "azul.hq.intel"
+    azul.vm.network :private_network, ip: "10.0.0.40"
+    azul.hostmanager.aliases = %w(azul)
+    azul.vm.provision "shell", :path => 'windows.ps1'
+  end
+
+
 end
