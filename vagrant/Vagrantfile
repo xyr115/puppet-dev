@@ -56,7 +56,7 @@ Vagrant.configure("2") do |config|
     analyst.hostmanager.enabled = true
     analyst.hostmanager.ignore_private_ip = false
     analyst.hostmanager.include_offline = true
-    analyst.vm.box = "centos/7"
+    analyst.vm.box = "boxcutter/centos72"
     analyst.vm.hostname = "analyst.hq.intel"
     analyst.vm.network :private_network, ip: "10.0.0.20"
     analyst.hostmanager.aliases = %w(analyst)
