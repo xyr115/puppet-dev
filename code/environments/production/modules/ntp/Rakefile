@@ -1,6 +1,10 @@
+## TODO: Edit to enable Puppet Rspec
+
 require 'puppetlabs_spec_helper/rake_tasks'
+# require 'rspec-puppet'
 require 'puppet-lint/tasks/puppet-lint'
 require 'metadata-json-lint/rake_task'
+require 'rspec/core/rake_task'
 
 if RUBY_VERSION >= '1.9'
   require 'rubocop/rake_task'
@@ -30,3 +34,9 @@ task :test do
     Rake::Task[test].invoke
   end
 end
+
+#Spec task if we are to automate the tasks in our module
+#Uncommenting this will make the symlinks not occur
+# RSpec::Core::RakeTask.new(:puppet_spec) do |t|
+#   t.pattern = 'spec/**/*_spec.rb'
+# end
