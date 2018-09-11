@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'ntp::install', :install => true do
+describe 'ntp::install' do
   context 'for a Linux based operating system' do
     let(:facts) {{ :kernel => 'Linux' }}
     it do

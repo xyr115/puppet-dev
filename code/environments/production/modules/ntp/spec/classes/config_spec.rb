@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe 'ntp::config', :config => true do
+describe 'ntp::config' do
   context 'for a Linux distribution' do
-    let(:facts) {{ :kernel => 'linux' }}
+    let(:facts) {{ :kernel => 'Linux' }}
     it do
       should contain_file('/etc/ntp.conf').with({
         'ensure'  => 'file',

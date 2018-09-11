@@ -1,7 +1,7 @@
 #Class for configuring ntp
 class ntp::config inherits ntp {
   $servers = $ntp::servers
-  if { $facts['kernel']
+  if ($facts['kernel'] == 'linux') {
     file { '/etc/ntp.conf':
       ensure  => file,
       mode    => '0644',
