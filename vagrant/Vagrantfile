@@ -22,7 +22,11 @@ Vagrant.configure("2") do |config|
     puppet.hostmanager.aliases = %w(puppet)
     puppet.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
-      sudo yum install ruby
+      sudo yum install -y ruby
+      gem install rake
+      gem install bundler
+      cd /etc/puppetlabs/code/environments/production/modules/ntp
+      bundle install
       sudo yum install vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install puppetserver -y
