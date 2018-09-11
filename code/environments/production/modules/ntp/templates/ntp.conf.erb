@@ -7,7 +7,9 @@ restrict default nomodify notrap nopeer noquery
 restrict 127.0.0.1
 restrict ::1
 
-server <%= @servers %> iburst
+<% [@servers].flatten.each do |ntp_server| -%>
+server <%= ntp_server %> iburst
+<% end -%>
 
 includefile /etc/ntp/crypto/pw
 

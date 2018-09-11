@@ -42,8 +42,8 @@
 #
 # Copyright 2018 Your name here, unless otherwise noted.
 #
-class ntp(
-$servers = $ntp::params::servers
-) inherits ntp::params {
-  contain 'ntp::install','ntp::config'
-}
+class ntp (
+  $servers = $ntp::params::servers
+  ) inherits ntp::params {
+    contain 'ntp::install','ntp::config'
+  }
