@@ -9,4 +9,9 @@ class ntp::params {
     $config_file = '/etc/ntp.conf'
   }
   #Can add Windows Logic here if needed
+
+  case $facts['osfamily'] {
+    'RedHat', 'CentOS': { $ntp_service = 'ntpd' }
+    default: { $ntp_service = 'ntp' }
+  }
 }

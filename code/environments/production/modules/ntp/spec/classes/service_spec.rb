@@ -5,8 +5,9 @@ describe 'ntp::service' do
     let(:facts) {{ :kernel => 'Linux' }}
     it do
       should contain_service('ntp').with({
-        'ensure' => 'running',
-        'enable' => true,
+        'ensure'  => 'running',
+        'enable'  => true,
+        'require' => 'Package[ntp]',
       })
     end
   end
