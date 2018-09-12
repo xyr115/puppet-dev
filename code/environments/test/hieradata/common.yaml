@@ -1,5 +1,0 @@
----
-  classes:
-    - inspiration
-    - ntp
-  ntp::servers: 'foo.bar.badger'

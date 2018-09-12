@@ -25,19 +25,19 @@ Vagrant.configure("2") do |config|
       sudo yum install -y ruby
       gem install rake
       gem install bundler
-      cd /etc/puppetlabs/code/environments/production/modules/ntp
-      bundle install
+      # cd /etc/puppetlabs/code/environments/production/modules/ntp
+      # bundle install
       sudo yum install vim -y
-      sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
+      sudo rpm -Uvh http://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
       sudo yum install puppetserver -y
 
       #Copy Puppet Code contents of the synced folder under version control
-      sudo rm -rf /etc/puppetlabs/code
-      sudo ln -s /puppet_code /etc/puppetlabs/code
+      # sudo rm -rf /etc/puppetlabs/code
+      # sudo ln -s /puppet_code /etc/puppetlabs/code
 
       #Copy Puppet Server contents of the synced folder under version control
-      sudo rm -rf /etc/puppetlabs/puppetserver
-      sudo ln -s /puppet_server /etc/puppetlabs/puppetserver
+      # sudo rm -rf /etc/puppetlabs/puppetserver
+      # sudo ln -s /puppet_server /etc/puppetlabs/puppetserver
 
       sudo sed -i 's/2g/4g/g' /etc/sysconfig/puppetserver
       #sudo sed -i 's/-XX:MaxPermSize=256m//g' /etc/sysconfig/puppetserver
@@ -51,7 +51,8 @@ Vagrant.configure("2") do |config|
       sudo chmod -R 0500 /etc/puppetlabs/puppet/eyaml
       sudo chmod 0400 /etc/puppetlabs/puppet/eyaml/*.pem
 
-      sudo service puppetserver start
+      sudo systemctl enable puppetserver
+      sudo systemctl start puppetserver
     SHELL
   end
 
