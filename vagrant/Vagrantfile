@@ -75,6 +75,26 @@ Vagrant.configure("2") do |config|
       sudo rpm -Uvh http://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
       sudo yum install -y puppet-agent
       sudo service puppet start
+      pt/puppetlabs/bin/puppet module install puppetlabs-stdlib -v 4.16.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-concat -v 2.2.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-apache -v 1.11.1
+      /opt/puppetlabs/bin/puppet module install puppetlabs-apt -v 2.3.0
+      /opt/puppetlabs/bin/puppet module install theforeman-dhcp -v 3.1.0
+      /opt/puppetlabs/bin/puppet module install theforeman-dns -v 4.1.0
+      /opt/puppetlabs/bin/puppet module install puppet-extlib -v 1.1.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-firewall -v 1.8.2
+      /opt/puppetlabs/bin/puppet module install theforeman-foreman -v 7.2.0
+      /opt/puppetlabs/bin/puppet module install theforeman-foreman_proxy -v 5.1.4
+      /opt/puppetlabs/bin/puppet module install theforeman-git -v 2.0.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-inifile -v 1.6.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-mysql -v 3.10.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-postgresql -v 4.9.0
+      /opt/puppetlabs/bin/puppet module install theforeman-puppet -v 7.1.3
+      /opt/puppetlabs/bin/puppet module install puppetlabs-puppetdb -v 5.1.2
+      /opt/puppetlabs/bin/puppet module install puppet-staging -v 2.2.0
+      /opt/puppetlabs/bin/puppet module install theforeman-tftp -v 2.0.0
+      /opt/puppetlabs/bin/puppet module install puppetlabs-xinetd -v 2.0.0
+      /opt/puppetlabs/bin/puppet module install theforeman-foreman_scap_client
     SHELL
   end
 
@@ -102,7 +122,7 @@ Vagrant.configure("2") do |config|
     azul.vm.provider :virtualbox do |azl|
       azl.memory = 4096
     end
-    #Puppet Agent for Puppet Server
+    #Puppet Agent for Windows Server
     azul.vm.box = "devopsguys/Windows2012R2Eval"
     azul.vm.hostname = "azul.hq.intel"
     azul.vm.network :private_network, ip: "10.0.0.40"
