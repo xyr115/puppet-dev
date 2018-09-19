@@ -48,8 +48,8 @@ Vagrant.configure("2") do |config|
       /opt/puppetlabs/bin/puppet module install puppetlabs-concat -v 5.0.0
       /opt/puppetlabs/bin/puppet module install puppetlabs-apache -v 3.3.0
       /opt/puppetlabs/bin/puppet module install puppetlabs-apt -v 6.0.0
-      # /opt/puppetlabs/bin/puppet module install theforeman-dhcp -v 4.1.1
-      # /opt/puppetlabs/bin/puppet module install theforeman-dns -v 5.3.0
+      /opt/puppetlabs/bin/puppet module install theforeman-dhcp -v 4.1.1
+      /opt/puppetlabs/bin/puppet module install theforeman-dns -v 5.3.0
       # /opt/puppetlabs/bin/puppet module install puppet-extlib -v 2.3.1
       # /opt/puppetlabs/bin/puppet module install puppetlabs-firewall -v 1.12.0
       # /opt/puppetlabs/bin/puppet module install theforeman-foreman -v 8.2.0
