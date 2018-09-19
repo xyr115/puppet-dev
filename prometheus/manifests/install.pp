@@ -1,9 +1,9 @@
-# Class to install ntp package
-class ntp::install {
+#Class for prometheus module
+class prometheus::install {
   $os_family = $facts['os_family']
   case $facts['kernel'] {
     'linux': {
-      package { 'ntp':
+      package { 'prometheus':
         ensure => installed,
       }
     }

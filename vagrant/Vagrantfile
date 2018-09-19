@@ -10,7 +10,6 @@ Vagrant.configure("2") do |config|
     puppet.vm.synced_folder ".", "/vagrant"
     puppet.vm.synced_folder "../code", "/puppet_code"
     puppet.vm.synced_folder "../puppetserver", "/puppet_server"
-    # puppet.vm.box = "boxcutter/centos72"
 
     puppet.hostmanager.enabled = true
     puppet.hostmanager.ignore_private_ip = false
@@ -22,12 +21,10 @@ Vagrant.configure("2") do |config|
     puppet.hostmanager.aliases = %w(puppet)
     puppet.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
-      sudo yum install -y ruby
+      sudo yum install -y vim ruby
       gem install rake
       gem install bundler
-      cd /etc/puppetlabs/code/environments/production/modules/ntp
-      bundle install
-      sudo yum install vim -y
+
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install puppetserver -y
 
@@ -51,7 +48,13 @@ Vagrant.configure("2") do |config|
       sudo chmod -R 0500 /etc/puppetlabs/puppet/eyaml
       sudo chmod 0400 /etc/puppetlabs/puppet/eyaml/*.pem
 
+      alias cdpup="cd /etc/puppetlabs/code/environments"
+      source ~/.bashrc
+
       sudo service puppetserver start
+
+      cd /etc/puppetlabs/code/environments/production/modules/ntp
+      bundle install
     SHELL
   end
 
@@ -63,16 +66,15 @@ Vagrant.configure("2") do |config|
     analyst.hostmanager.ignore_private_ip = false
     analyst.hostmanager.include_offline = true
     analyst.vm.box = "centos/7"
-    # analyst.vm.box = "boxcutter/centos72"
     analyst.vm.hostname = "analyst.hq.intel"
     analyst.vm.network :private_network, ip: "10.0.0.20"
     analyst.hostmanager.aliases = %w(analyst)
     analyst.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
-      sudo yum install ruby
-      sudo yum install vim -y
+      sudo yum install ruby vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install -y puppet-agent
+
       sudo service puppet start
     SHELL
   end
