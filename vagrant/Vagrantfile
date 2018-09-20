@@ -21,6 +21,7 @@ Vagrant.configure("2") do |config|
     puppet.vm.network :private_network, ip: "10.0.0.10"
     puppet.hostmanager.aliases = %w(puppet)
     puppet.vm.provision "shell", inline: <<-SHELL
+    s.env = {:http_proxy => ENV['HTTP_PROXY'], :https_proxy => ENV['HTTP_PROXY']}
       sudo yum update -y
       sudo yum install -y vim ruby
       gem install rake
@@ -56,12 +57,21 @@ Vagrant.configure("2") do |config|
 
       cd /etc/puppetlabs/code/environments/production/modules/ntp
       bundle install
+
+      #Start the installs for the repo/local proxy
+      #Obtain apache and repos
+      yum -y install createrepo httpd yum-utils
+      #
+      repodir=/var/www/html/rpmrepo
+      mkdir -p $repodir
+      
+
     SHELL
     config.vm.provision "shell" do |s|
-    s.path = "mkrepo.sh"
-    s.args = PACKAGES
-    s.env = {:http_proxy => ENV['HTTP_PROXY'], :https_proxy => ENV['HTTP_PROXY']}
-  end
+      s.path = "mkrepo.sh"
+      s.args = PACKAGES
+      s.env = {:http_proxy => ENV['HTTP_PROXY'], :https_proxy => ENV['HTTP_PROXY']}
+    end
   end
 
   config.vm.define "analyst" do |analyst|
