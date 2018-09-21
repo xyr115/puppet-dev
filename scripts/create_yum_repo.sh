@@ -3,16 +3,11 @@
 # yum proxy for vagrant
 # (for RHEL/CentOS 7.x)
 #####################################
-
-# disable kdump (since only <1GB memory)
-systemctl stop kdump.service
-systemctl disable kdump.service
-
 # install needed packages
 yum -y install createrepo httpd yum-utils
 
 # create repo directory
-repodir=/var/www/html/rpmrepo
+repodir=/var/www/html/xyrepo
 mkdir -p $repodir
 
 # download packages

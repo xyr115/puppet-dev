@@ -67,17 +67,11 @@ Vagrant.configure("2") do |config|
       cd /etc/puppetlabs/code/environments/production/modules/ntp
       bundle install
 
-      #Start the installs for the repo/local proxy
-      #Obtain apache and repos
-      yum -y install createrepo httpd yum-utils
-
-      repodir=/var/www/html/xyrepo
-      mkdir -p $repodir
 
     SHELL
 
     puppet.vm.provision "shell" do |s|
-      s.path = "create_yum_repo.sh"
+      s.path = "../scripts/create_yum_repo.sh"
       s.args = PACKAGES
       s.env = {:http_proxy => ENV['HTTP_PROXY'], :https_proxy => ENV['HTTP_PROXY']}
     end
