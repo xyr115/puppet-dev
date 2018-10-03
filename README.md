@@ -25,4 +25,4 @@ Standardized development of Puppet Modules
 # Known Issues
 * On Mac Sierra errors are thrown when vagrant up is invoked that relate to ip errors, let the installation run, then it corrects
 
-* Puppet runs fail or eyaml does not parse: It's best to rebuild all boxes together, making non-breaking changes issuing vagrant reload --provision [some box] 
+* Puppet runs fail or eyaml does not parse: It's best to rebuild all boxes together, making non-breaking changes issuing ```vagrant reload --provision [some box]```
