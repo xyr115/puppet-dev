@@ -10,11 +10,12 @@ Standardized development of Puppet Modules
     * vagrant-vbguest (0.15.2, global)
   
 # Notice: do not run vagrant up without...
-Verifying/editing the vagrantfile code for memory provisioning related functions 
-If you only have 16Gb locally, it will crash your machine
-Ideally, you only need one server and two clients—e.g. 
-    $ vagrant up puppet analyst operations
-
+* Verifying/editing the vagrantfile code for memory provisioning related functions 
+* If you only have 16Gb locally, it will crash your machine
+* Ideally, you only need one server and two clients—e.g. 
+    
+    ```$ vagrant up puppet analyst operations```
+`
 # The following get installed:
 * CentOS PuppetServer (Puppet 4 by default, but 5 is on a branch)
 * CentOS Puppet Agent
