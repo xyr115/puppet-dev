@@ -1,5 +1,6 @@
 ---
   classes:
+    - prometheus
     - inspiration
     - ntp
   ntp::servers: 'foo.bar.badger'
