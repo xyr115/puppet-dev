@@ -6,7 +6,7 @@
 "If you only have 16Gb locally, it will crash your machine"
 
 # The following get installed:
-CentOS PuppetServer
-CentOS Puppet Agent
-Debian Puppet Agent
-Windows 2012 Eval Agent
+* CentOS PuppetServer (Puppet 4 by default, but 5 is on a branch)
+* CentOS Puppet Agent
+* Debian Puppet Agent
+* Windows 2012 Eval Agent
