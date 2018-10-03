@@ -14,8 +14,8 @@ Standardized development of Puppet Modules
 * If you only have 16Gb locally, it will crash your machine
 * Ideally, you only need one server and two clients—e.g. 
     
-    ```$ vagrant up puppet analyst operations``
-`
+    ```$ vagrant up puppet analyst operations```
+
 # The following get installed:
 * CentOS PuppetServer (Puppet 4 by default, but 5 is on a branch)
 * CentOS Puppet Agent
