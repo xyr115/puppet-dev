@@ -4,11 +4,13 @@
 # (for RHEL/CentOS 7.x)
 #####################################
 # install needed packages
+
 yum -y install createrepo httpd yum-utils
 
 # create repo directory
-repodir=xyrepo
-mkdir -p /var/www/html/$repodir
+reponame=xyrepo
+repodir=/var/www/html/xyrepo
+mkdir -p $repodir
 
 # download packages
 if [ $# -gt 0 ]; then
@@ -16,7 +18,7 @@ yumdownloader $@ --destdir=$repodir --resolve
 fi
 
 # create repository and publish to the web
-createrepo --simple-md-filenames $repodir
+sudo createrepo --simple-md-filenames $repodir
 systemctl enable httpd
 systemctl start httpd
 
@@ -39,14 +41,18 @@ fi
 
 #===============================Create the repo file==================================
 
+sudo mkdir /etc/yum.repos.d/org
+sudo mv /etc/yum.repos.d/CentOS* /etc/yum.repos.d/org
+
 cat > /etc/yum.repos.d/XYR.repo <<EOL
 [XYR-Local-Repo]
 name=Xyr Local Repo
-baseurl=http://$ipaddr/$repodir
-enabled=1
-priority=1
+baseurl=http://$ipaddr/$reponame
 gpgcheck=0
+enabled=1
 EOL
+
+yum clean all
 
 #===============================Updater Script Section==================================
 

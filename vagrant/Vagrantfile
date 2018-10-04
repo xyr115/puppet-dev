@@ -74,8 +74,13 @@ Vagrant.configure("2") do |config|
 
     #Stand up the repo and finish completing gem installation
     puppet.vm.provision "shell", inline: <<-SHELL
-      ./yumupdate.sh /puppet_binaries/*.rpm
-      sudo cp /etc/yum.repos.d/XYR.repo /var/www/html/xyrepo/.
+      #Done individually because yumdownloader cannot parse with rpm in the name
+      sudo ./yumupdate.sh /puppet_binaries/prometheus-2.3.2-1.el7.x86_64
+      sudo ./yumupdate.sh /puppet_binaries/alertmanager-0.15.2-1.el7.x86_64
+      sudo ./yumupdate.sh /puppet_binaries/node_exporter-0.16.0-3.el7.centos.x86_64
+      sudo yum clean all
+
+      sudo cp /etc/yum.repos.d/XYR.repo /var/www/html/xyrepo/
       # cd /etc/puppetlabs/code/environments/production/modules/ntp
       # bundle install
     SHELL
