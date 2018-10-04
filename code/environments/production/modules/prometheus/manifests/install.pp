@@ -8,10 +8,10 @@ class prometheus::install {
       }
 
       package { 'prometheus-2.3.2-1.el7.x86_64.rpm':
-        ensure   => 'present',
-        provider => 'rpm',
+        ensure   => 'installed',
+        provider => 'yum',
         source   =>  '/tmp/prometheus-2.3.2-1.el7.x86_64.rpm',
-        require => File["/tmp/prometheus-2.3.2-1.el7.x86_64.rpm"],
+        require  => File["/tmp/prometheus-2.3.2-1.el7.x86_64.rpm"],
       }
     }
     default: {

@@ -64,10 +64,6 @@ Vagrant.configure("2") do |config|
 
       sudo service puppetserver start
 
-      cd /etc/puppetlabs/code/environments/production/modules/ntp
-      bundle install
-
-
     SHELL
 
     puppet.vm.provision "shell" do |s|
@@ -75,6 +71,14 @@ Vagrant.configure("2") do |config|
       s.args = PACKAGES
       s.env = {:http_proxy => ENV['HTTP_PROXY'], :https_proxy => ENV['HTTP_PROXY']}
     end
+
+    #Stand up the repo and finish completing gem installation
+    puppet.vm.provision "shell", inline: <<-SHELL
+      ./yumupdate.sh /puppet_binaries/*.rpm
+      sudo cp /etc/yum.repos.d/XYR.repo /var/www/html/xyrepo/.
+      # cd /etc/puppetlabs/code/environments/production/modules/ntp
+      # bundle install
+    SHELL
   end
 
   config.vm.define "analyst" do |analyst|
@@ -88,12 +92,15 @@ Vagrant.configure("2") do |config|
     analyst.vm.hostname = "analyst.hq.intel"
     analyst.vm.network :private_network, ip: "10.0.0.20"
     analyst.hostmanager.aliases = %w(analyst)
+
     analyst.vm.provision "shell", inline: <<-SHELL
       sudo yum update -y
       sudo yum install ruby vim -y
       sudo rpm -ivh http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
       sudo yum install -y puppet-agent
       sudo service puppet start
+      #Get the repo file and then add it to the enabled settings using yum-config-manager
+      #sudo yum clean all
     SHELL
   end
 
@@ -114,6 +121,9 @@ Vagrant.configure("2") do |config|
       sudo apt-get install puppet-agent -y
       sudo /opt/puppetlabs/bin/puppet agent --enable
       sudo service puppet start
+
+      #Get the repo file and then add it to the enabled settings using yum-config-manager
+      #sudo yum clean all
     SHELL
   end
 
