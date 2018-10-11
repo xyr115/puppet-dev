@@ -1,8 +1,7 @@
 #Class for prometheus module
 class prometheus::install {
-  $os_family = $facts['os_family']
-  case $facts['kernel'] {
-    'linux': {
+  case $::kernel {
+    'Linux': {
       package { 'prometheus':
         ensure   => 'installed',
         provider => 'yum',
