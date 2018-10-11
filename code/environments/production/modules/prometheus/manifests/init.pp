@@ -1,4 +1,4 @@
 # Class: prometheus
 class prometheus {
-  include 'prometheus::install'
+  contain 'prometheus::install','prometheus::config','prometheus::service'
 }
