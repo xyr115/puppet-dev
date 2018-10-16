@@ -1,0 +1,23 @@
+global:
+  smtp_smarthost: 'SOME_TEAM@TEAM.COM:25'
+  smtp_from: 'SOME_SERVICE_ACC@TEAM.COM'
+  smtp_auth_username: 'DOMAIN\SOME_SERVICE_ACC_USER'
+  smtp_auth_password: 'SOME_SERVICE_ACC_PW'
+  smtp_require_tls: false
+
+templates:
+- '/etc/alertmanager/template/*.tmpl'
+
+route:
+  repeat_interval: 1h
+  receiver: SOME_OPS_TEAM_NAME
+
+receivers:
+- name: 'SOME_OPS_TEAM_NAME'
+  email_configs:
+  - to: 'SOME_SERVICE_ACC_ALERT_EMAIL@TEAM.COM'
+
+  slack_configs:
+  - api_url: SOME_SLACK_URL_KEY
+    channel: '#SOME_SLACK_CHANNEL'
+    send_resolved: true
