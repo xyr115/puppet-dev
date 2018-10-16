@@ -17,7 +17,7 @@ lockfile=/var/lock/subsys/$prog
 
 start() {
     echo -n $"Starting $prog: "
-    daemonize -u node_exporter $exec --web.listen-address=":31415"
+    daemonize -u node_exporter $exec --web.listen-address=:31415
     retval=$?
     echo
     [ $retval -eq 0 ] && touch $lockfile
