@@ -2,8 +2,8 @@ class alertmanager::install {
   case $::kernel {
     'Linux': {
       package { 'alertmanager':
-        ensure   => 'installed',
-        provider => 'yum',
+        ensure   => installed,
+        provider => yum,
       }
     }
     default: {
