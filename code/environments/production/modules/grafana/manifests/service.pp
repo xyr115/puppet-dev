@@ -4,5 +4,8 @@ class grafana::service {
     ensure  => present,
   }
 
-
+  service { 'grafana':
+    ensure => running,
+    require => Package['grafana'],
+  }
 }
