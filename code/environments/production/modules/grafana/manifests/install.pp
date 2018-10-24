@@ -1,5 +1,6 @@
 class grafana::install {
   package { 'grafana':
-    ensure => installed,
+    ensure   => installed,
+    provider => yum,
   }
 }
