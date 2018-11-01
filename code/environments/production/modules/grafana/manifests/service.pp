@@ -1,5 +1,5 @@
 class grafana::service {
-  service { 'grafana':
+  service { 'grafana-server':
     ensure => running,
     require => Package['grafana'],
   }
