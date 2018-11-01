@@ -32,8 +32,17 @@ scrape_configs:
       - targets: ['localhost:9100']
 
   #Automate the discovery of services
-  - job_name: 'ec2'
-    ec2_sd_configs:
-      - region: us-east-1
-        access_key: SOME_KEY
-        secret_key: SOME_OTHER_KEY
+  - job_name: 'ec2_nodes'
+      ec2_sd_configs:
+        - region: eu-east-1
+          access_key: PUT_THE_ACCESS_KEY_HERE
+          secret_key: PUT_THE_SECRET_KEY_HERE
+          port: 9100
+      relabel_configs:
+        - source_labels: [__meta_ec2_tag_Name]
+          regex: Prometheus.*
+          action: keep
+        - source_labels: [__meta_ec2_public_ip]
+          regex:  '(.*)'
+          target_label: __address__
+          replacement: '${1}:9100'
