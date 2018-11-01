@@ -2,6 +2,7 @@ class node_exporter::service {
   case $::operatingsystemmajrelease {
    '7': {
       file { '/etc/systemd/system/node_exporter.service':
+        notify => Service['node_exporter']
         ensure => file,
         source => 'puppet:///modules/node_exporter/node_exporter.service',
       }
