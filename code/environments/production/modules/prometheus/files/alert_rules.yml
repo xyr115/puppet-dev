@@ -7,9 +7,9 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: Machine under heavy load, the world is kind of sorta burning down
+      summary: Insance down for more than 5 minutes!
 
-- name: example
+- name: High CPU Usage
   rules:
   - alert: cpuUsage
     expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{job='node_exporter',mode="idle"}[5m])) * 100) > 95
@@ -17,4 +17,4 @@ groups:
     labels:
       severity: critical
     annotations:
-      summary: Machine under heavy load, the world is kind of sorta burning down
+      summary: Machine under heavy—at or above 95%
