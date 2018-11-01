@@ -34,7 +34,7 @@ scrape_configs:
   #Automate the discovery of services
   - job_name: 'ec2_nodes'
       ec2_sd_configs:
-        - region: eu-east-1
+        - region: us-east-1
           access_key: PUT_THE_ACCESS_KEY_HERE
           secret_key: PUT_THE_SECRET_KEY_HERE
           port: 9100
