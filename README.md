@@ -4,16 +4,20 @@ Standardized development of Puppet Modules
 # Getting Started / Requirements
   * As of 10/1/18: Both vagrant 2.1.x are compatible
   * Requires an installation of virtualbox and Oracle_VM_VirtualBox_Extension_Pack-5.0.40-115130.ova
-  * Installation of RVm using Ruby 2.5.1 (Other rubies not currently tested, please up this as needed)
+  * Installation of RVM using Ruby 2.5.1 (Other rubies not currently tested, please up this as needed)
   * Installation of vagrant plugins:
     * vagrant-hostmanager (1.8.9, global)
     * vagrant-vbguest (0.15.2, global)
-  
+
+# Getting Started Addendum (Prometheus, Alertmanager, Node Exporter)
+  * The YAML configuration files for these services will need to be updated in each puppet module, respectively
+  * To perform the AWS ec2 auto discovery, the secret key and access key to such instances with the proper IAM role is required
+
 # Notice: do not run vagrant up without...
-* Verifying/editing the vagrantfile code for memory provisioning related functions 
+* Verifying/editing the vagrantfile code for memory provisioning related functions
 * If you only have 16Gb locally, it will crash your machine
-* Ideally, you only need one server and two clients—e.g. 
-    
+* Ideally, you only need one server and two clients—e.g.
+
     ```$ vagrant up puppet analyst operations```
 
 # The following get installed:
