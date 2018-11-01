@@ -12,11 +12,11 @@ route:
   repeat_interval: 1h
   receiver: SOME_OPS_TEAM_NAME
 
-# inhibit_rules:
-# - source_match:
-#     severity: critical
-# - target_match:
-#     severity: warning
+inhibit_rules:
+- source_match:
+    severity: critical
+- target_match:
+    severity: warning
 
 receivers:
 - name: 'SOME_OPS_TEAM_NAME'
