@@ -1,3 +1,3 @@
 class grafana {
-  contain 'grafana::install','grafana::config','config::service'
+  contain 'grafana::install','config::service'
 }
