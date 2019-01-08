@@ -6,7 +6,7 @@ The following vagrant plugins are required for this setup:
   vagrant-vbguest (0.15.2, global)
 
 VBox Version:
-  5.2.18 r124319 (Qt5.6.3)
+  6.0.0
 
 Extension Pack Version
   5.2.18 r124319 (Qt5.6.3)
