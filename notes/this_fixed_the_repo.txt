@@ -1,0 +1,87 @@
+1  cd /var/www/
+2  ls
+3  cd ho
+4  cd html/
+5  ls
+6   ls xyrepo/
+7  ls ~
+8  ls
+9  cd xyrepo/
+10  ls
+11  cat XYR.repo
+12  cat /etc/yum.repos.d/XYR.repo
+13  exit
+14  yum update
+15  cat /etc/yum.repos.d/
+16  cat /etc/yum.repos.d/XYR.repo
+17  ./yumupdate.sh /puppet_binaries/*.rpm
+18  cp /puppet_binaries/*.rpm /var/www/html/xyrepo/.
+19* sudo cp /puppet_binaries/prometheus-2.3.2-1.el7.x86_64.rpm /var/www/html/xyrepo/.
+20  ./yumupdate.sh /puppet_binaries/*.rpm
+21  ./yumupdate.sh /var/www/html/xyrepo/prometheus-2.3.2-1.el7.x86_64.rpm
+22  yum install prometheus
+23  sudo yum install prometheus
+24  yum repolist
+25  yum provides *prometheus*
+26  yum enable
+27  yum repo enable
+28  yum --help
+29  yum --enablerepo=XYR
+30  yum --enablerepo=XYR-local-repo
+31  yum repolist
+32  yum --enablerepo=XYR-Local-Repo
+33  yum --enablerepo=XYR*
+34  yum --enablerepo=
+35  cat /var/www/html/xyrepo/XYR.repo
+36  curl -O http://10.0.2.15/xyrepo/XYR.repo
+37  ls
+38  cat XYR.repo
+39  cd /var/www/html/xyrepo/
+40  ls
+41  createrepo --update .
+42  sudo createrepo --update .
+43  sudo yum install prometheus
+44  sudo yum install ksh
+45  sudo yum install prometheus2
+46  sudo yum install prometh*
+47  yum install alert*
+48  sudo yum install alert*
+49  sudo yum install nodemanager*
+50  mkdir /etc/yum.repos.d/org
+51  mv /etc/yum.repos.d/CentOS* /etc/yum.repos.d/org
+52  sudo  mkdir /etc/yum.repos.d/org
+53  cd /etc/yum.repos.d/
+54  ls
+55  mv /etc/yum.repos.d/CentOS* /etc/yum.repos.d/org
+56  sudo @@
+57  sudo mv /etc/yum.repos.d/CentOS* /etc/yum.repos.d/org
+58  ls
+59  yum install prometheus
+60  sudo yum install prometheus
+61  sudo yum install prome*
+62  sudo yum install alert*
+63  cd
+64  ./yumupdate.sh /puppet_binaries/prometheus-2.3.2-1.el7.x86_64.rpm
+65  vim yumupdate.sh
+66  ./yumupdate.sh /var/www/html/xyrepo/prometheus-2.3.2-1.el7.x86_64.rpm
+67  cp /puppet_binaries/prometheus-2.3.2-1.el7.x86_64.rpm .
+68  ls
+69  ./yumupdate.sh prometheus-2.3.2-1.el7.x86_64.rpm
+70  yum clean all
+71  ./yumupdate.sh prometheus-2.3.2-1.el7.x86_64.rpm
+72  rm -rf /var/tmp/yum-vagrant-7teMJm/
+73  yum clean all
+74  #./yumupdate.sh prometheus-2.3.2-1.el7.x86_64.rpm
+75  cat /etc/yum.repos.d/XYR.repo
+76  vim /etc/yum.repos.d/XYR.repo
+77  sudo vim /etc/yum.repos.d/XYR.repo
+78  ./yumupdate.sh prometheus-2.3.2-1.el7.x86_64
+79  ./yumupdate.sh prometheus-2.3.2-1.el7.x86_64.rpm
+80  ./yumupdate.sh /puppet_binaries/*
+81  ./yumupdate.sh /puppet_binaries/*.rpm
+82  ./yumupdate.sh prometheus-2.3.2-1.el7.x86_64
+83  yum install prometheus.x86_64
+84  sudo yum install prometheus.x86_64
+85  sudo yum install prometheus
+86  clear
+87  history
