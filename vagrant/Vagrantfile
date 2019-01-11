@@ -25,9 +25,7 @@ Vagrant.configure("2") do |config|
       sudo yum install -y ruby
       gem install rake
       gem install bundler
-
-      cd /etc/puppetlabs/code/environments/production/modules/ntp
-      bundle install
+      gem install hiera-eyaml
 
       sudo yum install -y centos-release-scl vim
       sudo yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -47,38 +45,38 @@ Vagrant.configure("2") do |config|
 
 
       #This runs the foreman installer and enables puppet runs on individual nodes
-
       sudo yum foreman-installer \
-    --foreman-proxy-bind-host \
-    --foreman-puppetrun \
-    --foreman-unattended \
-    --foreman-telemetry-prometheus-enabled \
-    --foreman-proxy-dhcp --foreman-proxy-dns \
-    --foreman-proxy-dns-reverse \
-    --foreman-proxy-dns-listen-on \
-    --foreman-proxy-tftp \
-    --foreman-proxy-logs \
-    --foreman-proxy-log \
-    --foreman-proxy-http-port \
-    --foreman-proxy-http \
-    --foreman-proxy-freeipa-remove-dns \
-    --foreman-proxy-freeipa-config \
-    --puppet-postrun-command \
-    --puppet-prerun-command \
-    --puppet-server-metrics-graphite-enable \
-    --puppet-server-metrics-graphite-host \
-    --puppet-server-metrics-graphite-interval \
-    --puppet-server-metrics-graphite-port \
-    --puppet-server-puppetdb-host \
-    --puppet-server-puppetdb-port \
-    --puppet-server-puppetserver-dir \
-    --puppet-server-puppetserver-logdir \
-    --puppet-server-puppetserver-rundir \
-    --puppet-server-puppetserver-vardir \
-    --puppet-server-puppetserver-jruby9k \
-    --puppet-server-puppetserver-experimental \
-    --puppet-splay \
-    --puppet-splaylimit \
+      --puppet-server-puppetserver-dir \
+      --puppet-server-puppetserver-logdir \
+      --puppet-server-puppetserver-rundir \
+      --puppet-server-puppetserver-vardir \
+      --puppet-server-puppetserver-jruby9k \
+      --puppet-server-puppetserver-experimental \
+      --foreman-proxy-bind-host \
+      --foreman-puppetrun \
+      --foreman-unattended \
+      --foreman-telemetry-prometheus-enabled \
+      --foreman-proxy-dhcp \
+      --foreman-proxy-dns \
+      --foreman-proxy-dns-reverse \
+      --foreman-proxy-dns-listen-on \
+      --foreman-proxy-tftp \
+      --foreman-proxy-logs \
+      --foreman-proxy-log \
+      --foreman-proxy-http-port \
+      --foreman-proxy-http \
+      --foreman-proxy-freeipa-remove-dns \
+      --foreman-proxy-freeipa-config \
+      --puppet-postrun-command \
+      --puppet-prerun-command \
+      --puppet-server-metrics-graphite-enable \
+      --puppet-server-metrics-graphite-host \
+      --puppet-server-metrics-graphite-interval \
+      --puppet-server-metrics-graphite-port \
+      --puppet-server-puppetdb-host \
+      --puppet-server-puppetdb-port \
+      --puppet-splay \
+      --puppet-splaylimit
 
 
 
@@ -91,7 +89,7 @@ Vagrant.configure("2") do |config|
       echo "*.hq.intel" | sudo tee /etc/puppetlabs/puppet/autosign.conf
 
       #Configure the keys for eyaml (Should the keys change in the directory)
-      sudo gem install hiera-eyaml
+
       sudo mkdir /etc/puppetlabs/puppet/eyaml
       sudo cp -r /vagrant/keys/* /etc/puppetlabs/puppet/eyaml
       sudo chmod -R 0500 /etc/puppetlabs/puppet/eyaml
