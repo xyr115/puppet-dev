@@ -1,0 +1,25 @@
+#
+# Managed by Puppet!!
+
+[Unit]
+Description=Prometheus Alertmanager Service
+Wants=network-online.target
+After=network.target
+
+
+#Need to start doing this through hiera, especially for ports
+
+[Service]
+User=alertmanager
+Group=alertmanager
+Type=simple
+ExecStart=/usr/bin/alertmanager \
+    --config.file /etc/alertmanager/alertmanager.yml \
+    --storage.path /var/lib/alertmanager/data \
+    --web.listen-address "<%= @box_addr %>:31093" \
+    --web.external-url "http://<%= @box_addr %>:31093" \
+    --cluster.listen-address ":30194"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,13 @@
+[Unit]
+Description=Black Box Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/blackbox_exporter --web.listen-address=<%= @bb_listening_port %>
+
+[Install]
+WantedBy=multi-user.target

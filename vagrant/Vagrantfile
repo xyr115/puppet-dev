@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
 
     puppet.vm.synced_folder ".", "/vagrant"
     puppet.vm.synced_folder "../code", "/puppet_code"
-    puppet.vm.synced_folder "../puppetserver", "/puppet_server"
+    # puppet.vm.synced_folder "../puppetserver", "/puppet_server"
     # puppet.vm.box = "boxcutter/centos72"
 
     puppet.hostmanager.enabled = true
@@ -33,7 +33,6 @@ Vagrant.configure("2") do |config|
       sudo yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
       sudo yum -y install https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
-      sudo yum install puppetserver -y
 
       #Foreman installation
       sudo yum -y install yum localinstall https://yum.theforeman.org/releases/1.20/el7/x86_64/foreman-release.rpm
@@ -43,13 +42,45 @@ Vagrant.configure("2") do |config|
       foreman-libvirt \
       foreman-proxy \
       foreman-cli \
-      foreman-console
+      foreman-console \
+      foreman-installer
 
-      sudo yum -y install foreman-installer
 
-      #Copy Puppet Code contents of the synced folder under version control
-      sudo rm -rf /etc/puppetlabs/code
-      sudo ln -s /puppet_code /etc/puppetlabs/code
+      #This runs the foreman installer and enables puppet runs on individual nodes
+
+      sudo yum foreman-installer \
+    --foreman-proxy-bind-host \
+    --foreman-puppetrun \
+    --foreman-unattended \
+    --foreman-telemetry-prometheus-enabled \
+    --foreman-proxy-dhcp --foreman-proxy-dns \
+    --foreman-proxy-dns-reverse \
+    --foreman-proxy-dns-listen-on \
+    --foreman-proxy-tftp \
+    --foreman-proxy-logs \
+    --foreman-proxy-log \
+    --foreman-proxy-http-port \
+    --foreman-proxy-http \
+    --foreman-proxy-freeipa-remove-dns \
+    --foreman-proxy-freeipa-config \
+    --puppet-postrun-command \
+    --puppet-prerun-command \
+    --puppet-server-metrics-graphite-enable \
+    --puppet-server-metrics-graphite-host \
+    --puppet-server-metrics-graphite-interval \
+    --puppet-server-metrics-graphite-port \
+    --puppet-server-puppetdb-host \
+    --puppet-server-puppetdb-port \
+    --puppet-server-puppetserver-dir \
+    --puppet-server-puppetserver-logdir \
+    --puppet-server-puppetserver-rundir \
+    --puppet-server-puppetserver-vardir \
+    --puppet-server-puppetserver-jruby9k \
+    --puppet-server-puppetserver-experimental \
+    --puppet-splay \
+    --puppet-splaylimit \
+
+
 
       #Copy Puppet Server contents of the synced folder under version control
       # sudo rm -rf /etc/puppetlabs/puppetserver
@@ -60,15 +91,11 @@ Vagrant.configure("2") do |config|
       echo "*.hq.intel" | sudo tee /etc/puppetlabs/puppet/autosign.conf
 
       #Configure the keys for eyaml (Should the keys change in the directory)
-      sudo /opt/puppetlabs/bin/puppetserver gem install hiera-eyaml
+      sudo gem install hiera-eyaml
       sudo mkdir /etc/puppetlabs/puppet/eyaml
       sudo cp -r /vagrant/keys/* /etc/puppetlabs/puppet/eyaml
-      sudo chown -R puppet. /etc/puppetlabs/puppet/eyaml
       sudo chmod -R 0500 /etc/puppetlabs/puppet/eyaml
       sudo chmod 0400 /etc/puppetlabs/puppet/eyaml/*.pem
-
-      sudo systemctl enable puppetserver
-      sudo systemctl start puppetserver
     SHELL
   end
 

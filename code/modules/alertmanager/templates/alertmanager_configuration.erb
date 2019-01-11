@@ -1,0 +1,46 @@
+#
+# Managed by Puppet!!
+
+
+templates:
+- '/etc/alertmanager/template/*.tmpl'
+
+route:
+  group_wait: 45s
+  group_by: ['alertname']
+  repeat_interval: 30m
+  group_interval: 10m # Usually ~5 mins or more.
+  receiver: 'operations-team'
+
+receivers:
+- name: 'operations-team'
+  email_configs:
+  - to: 'prometheusalerts@healthreveal.com'
+    from: 'prometheus@healthreveal.com'
+    smarthost: smtp.gmail.com:25
+    auth_username: "prometheus@healthreveal.com"
+    auth_identity: null
+    auth_password: "oPZe8)xjyit9!"
+    #require_tls: false
+
+  slack_configs:
+  - api_url: https://hooks.slack.com/services/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
+    channel: '#promalerts-beta'
+    send_resolved: true
+
+    username: '{{ template "slack.default.username" . }}'
+    color: '{{ if eq .Status "firing" }}danger{{ else }}good{{ end }}'
+    title: '{{ template "slack.default.title" . }}'
+    title_link: '{{ template "slack.default.titlelink" . }}'
+    pretext: '{{ .CommonAnnotations.summary }}'
+    text: |-
+      {{ range .Alerts }}
+        *Alert:* {{ .Annotations.summary }} - `{{ .Labels.severity }}`
+        *Description:* {{ .Annotations.description }}
+        *Details:*
+        {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+        {{ end }}
+      {{ end }}
+    fallback: '{{ template "slack.default.fallback" . }}'
+    icon_emoji: '{{ template "slack.default.iconemoji" . }}'
+    icon_url: '{{ template "slack.default.iconurl" . }}'

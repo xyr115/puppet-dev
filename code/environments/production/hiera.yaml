@@ -1,54 +1,13 @@
----
-version: 5
-defaults:
-  # The default value for "datadir" is "data" under the same directory as the hiera.yaml
-  # file (this file)
-  # When specifying a datadir, make sure the directory exists.
-  # See https://puppet.com/docs/puppet/latest/environments_about.html for further details on environments.
-  # datadir: data
-  # data_hash: yaml_data
-hierarchy:
-  - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
-  - name: "Other YAML hierarchy levels"
-    paths:
-      - "common.yaml"
-
----
-version: 5
-defaults:
-  # The default value for "datadir" is "data" under the same directory as the hiera.yaml
-  # file (this file)
-  # When specifying a datadir, make sure the directory exists.
-  # See https://puppet.com/docs/puppet/latest/environments_about.html for further details on environments.
-  # datadir: data
-  # data_hash: yaml_data
-hierarchy:
-  - name: "Per-node data (yaml version)"
-    path: "nodes/%{::trusted.certname}.yaml"
-  - name: "Other YAML hierarchy levels"
-    paths:
-      - "common.yaml"
-
-
-
+# production/hiera.yaml
 ---
 version: 5
 
-defaults:
-  datadir: data
-
 hierarchy:
-  - name: "Eyaml hierarchy"
-    lookup_key: eyaml_lookup_key
-
-    options:                             # Hiera-eyaml specific options (the paths of the keypair used for encryption)
-      pkcs7_private_key: /etc/puppetlabs/eyaml/private_key.pkcs7.pem
-      pkcs7_public_key:  /etc/puppetlabs/eyaml/public_key.pkcs7.pem
-
-    # Use eyaml backend. Note this can be specified for each level
-    paths:                               # Instead of multiple hierarchy levels we can define just one with
-      - "nodes/%{trusted.certname}.yaml" # multiple paths, when the same backend is used. It's exactly the same.
-      - "role/%{::role}-%{::env}.yaml"
-      - "role/%{::role}.yaml"
-      - "common.yaml"
+  - name: "Common data"
+    path: "common.yaml"
+  
+  - name: "Per-node data"
+    path: "nodes/%{trusted.certname}.yaml"
+  
+  - name: "Per-OS defaults"
+    path: "os/%{facts.os.family}.yaml"
