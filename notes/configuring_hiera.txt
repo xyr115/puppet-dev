@@ -1,0 +1,101 @@
+We know that hiera.yaml can appear in many places: The global, environment, and module
+
+---
+# Hiera 5 Global configuration file
+#
+version: 5
+#
+# defaults:
+#   data_hash: yaml_data
+# hierarchy:
+#  - name: Common
+#    data_hash: yaml_data
+hierarchy: []
+
+======================================
+
+My dir structure looked like this for working hiera:
+
+$ ls /etc/puppetlabs/code/environments/production/.
+
+
+drwxr-xr-x. 1 vagrant vagrant 256 Jan 14 17:54 .
+drwxr-xr-x. 1 vagrant vagrant  96 Jan 11 20:35 ..
+drwxr-xr-x. 1 vagrant vagrant 192 Jan 14 17:40 data
+-rwxr-xr-x. 1 vagrant vagrant 879 Jan 11 20:35 environment.conf
+drwxr-xr-x. 1 vagrant vagrant 192 Jan 14 17:16 hieradata.bak
+-rw-r--r--. 1 vagrant vagrant 209 Jan 14 17:54 hiera.yaml
+drwxr-xr-x. 1 vagrant vagrant  96 Jan 11 20:54 manifests
+drwxr-xr-x. 1 vagrant vagrant 288 Jan 11 20:35 modules
+
+Ideally:
+
+drwxr-xr-x. 1 vagrant vagrant 256 Jan 14 17:54 .
+drwxr-xr-x. 1 vagrant vagrant  96 Jan 11 20:35 ..
+drwxr-xr-x. 1 vagrant vagrant 192 Jan 14 17:40 data
+-rwxr-xr-x. 1 vagrant vagrant 879 Jan 11 20:35 environment.conf
+-rw-r--r--. 1 vagrant vagrant 209 Jan 14 17:54 hiera.yaml
+drwxr-xr-x. 1 vagrant vagrant  96 Jan 11 20:54 manifests
+drwxr-xr-x. 1 vagrant vagrant 288 Jan 11 20:35 modules
+
+
+Example of the environment(production in this case)
+We note that data dir will default to the data directory when nothing is specified for it
+
+---
+version: 5
+defaults:
+  datadir: data
+  data_hash: yaml_data
+
+hierarchy:
+ - name: "Per-node data"
+   paths:
+    - "nodes/%{::trusted.certname}.yaml"
+    - "os/%{facts.os.family}.yaml"
+    - "common.yaml"
+
+
+
+The data file, in the same directory of the hiera.yaml in this case will contain the following:
+
+common.yaml (which contains the following)
+
+---
+version: 5
+classes:
+ - tenacity
+ - inspiration
+ - ntp
+ntp::servers: 'foo.bar.badger'
+
+
+Also inside are the nodes and os folders for which the nodes folder is populated with:
+
+analyst.yaml and operations.yaml
+
+Each of them contain the following respective lines:
+
+---
+  inspiration::server: >
+    ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEw
+    DQYJKoZIhvcNAQEBBQAEggEACF236gSPWzWeoRCnGpQ0pGQ8cMjKmuEfBxq/
+    wtanCV9PpLy1ZePtfisXJlv9k9lMpO3Y6FVCEwiCciHAnZuSig/j0X8vMuc6
+    W7dNQDUUYCxKXBMKWLSg0BfeibnMErypWqiB3bITbwOOPHpHELw/PsmqYpyO
+    aO4Jr1ZJtL+YUiTt1mtLu74ISJpgsRA8QWXJXcm7cI8Ky208vsqFShVDbWDm
+    4OH73yQDH4s/MzWoyXnFzMwDTluZUr6B3sBa83d3lvexjTKyAlImpqu8m7pw
+    JH5YPIrUzZwZ6gj97x5GkNMRWFJxQdJ31s/F+lbM26R9Nn1GCY7P25mkGjnM
+    C7wkCjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBBKOwItqNKCrRv9wWEF
+    fE3qgBBJmdRXPEHoFlBmUku7epS2]
+
+---
+  tenacity::server: >
+    ENC[PKCS7,MIIBeQYJKoZIhvcNAQcDoIIBajCCAWYCAQAxggEhMIIBHQIBADAFMAACAQEw
+    DQYJKoZIhvcNAQEBBQAEggEA5/tzxeiUAzHM4luirydBjmhNTPzKYYyNWxxI
+    61ocBb9Kl12HIzaYGtaO3wRY5IaNJXhoRrSJO0KroK7jnWZt/YKw26Npc3R3
+    H2rqajVDMny+BEk5TeGYfZVGqbJ2VKCu3ce64h22IZfyXggwBegtUUxue50T
+    h7jt/gJYnX/gFgeWVFkWyGtEG50Qzu+Ghx5tWoRf2vZrio4Y+KewqAl7hW7d
+    /g9IZXiRAxpMW9xy42LRxYZaqqDuvqUgbiK8KYgIBpB0k0jmPH/0QJIYlNLl
+    +7kdHw5+0Ac6jfiJ0nXo6y5bd4ZQ0Y21W1JdN7R8qXMUyiVinOJlvciIodot
+    UoD2mjA8BgkqhkiG9w0BBwEwHQYJYIZIAWUDBAEqBBDGhPpjumsYgYvXaJMg
+    U3bQgBB35+2yw2rgGjN8rTfI+NR2]

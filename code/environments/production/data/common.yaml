@@ -1,0 +1,17 @@
+---
+version: 5
+classes:
+ - tenacity
+ - inspiration
+ - ntp
+
+users:
+  daholmes:
+  shell: "/bin/zsh"
+  comment: "deron"
+  ssh_key:
+    comment: "deron"
+    key:  'AAAAB3NzaC1yc2EAAAADAQABAAABAQCcNi7iEB4Iqp+h1JWir8CpHMsf9dOWf37mLcAAklLywps3DuiUnv4882GhGLPqM00S3/eC3KOPLT+k/TZ8FOq3E3Uku+UcZm3lMSh2Lh08NNb0Lv8hJuIfGPQKG5/QxYff4bdUfLoJPWe0wxcVJPj4ELLCfI668p/ONoTuXEjumA3tdcYGFFFWVc8pfOlfabYwHk+GdnCPoNvqPFXMHArAqjN8mwk2n5evxonSlTIItBMuOgwh8bOGogREd8SrdibN1SX/QFkhySsY2wwW2l2TEEm6LwBCNFwn1Zu7xmfnppn+/EIJYWLvumPG3GW0Tq7awF9CT7Iri7XIE33cv4Yx'
+    type: 'ssh-rsa'   
+
+ntp::servers: 'foo.bar.badger'
